@@ -34,7 +34,9 @@ spring:
       ddl-auto: update
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
       dialect: org.hibernate.dialect.MariaDBDialect
-
+#  jackson:
+#    serialization:
+#      WRITE_DATES_AS_TIMESTAMPS: false
 
 feign:
   client:

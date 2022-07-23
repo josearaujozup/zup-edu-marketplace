@@ -7,10 +7,11 @@ import br.com.zup.edu.marketplace.usuarioclient.UsuarioClient;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.validation.Valid;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -47,6 +48,14 @@ public class CompraController {
         }
 
         return ResponseEntity.ok(detalhaProdutoResponse);
+    }
+
+
+    @PostMapping("/api/compras")
+    public ResponseEntity<?> comprar(@RequestBody @Valid CompraRequest request, UriComponentsBuilder uriComponentsBuilder){
+
+        System.out.println("Passou pela validação: " + request.getPagamento().getValidoAte());
+        return null;
     }
 
 
