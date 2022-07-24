@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -52,10 +53,28 @@ public class CompraController {
 
 
     @PostMapping("/api/compras")
+    @Transactional
     public ResponseEntity<?> comprar(@RequestBody @Valid CompraRequest request, UriComponentsBuilder uriComponentsBuilder){
+//        System.out.println("Passou pela validação: " + request.getPagamento().getValidoAte());
 
-        System.out.println("Passou pela validação: " + request.getPagamento().getValidoAte());
-        return null;
+        UsuarioResponse usuarioResponse = null;
+        try {
+            usuarioResponse =  new UsuarioResponse(usuarioClient.detalhaUsuario(request.getUsuario()));
+        } catch (FeignException e) {
+            throw new ResponseStatusException(NOT_FOUND, "Usuario não encontrado");
+        }
+
+        ProdutoResponse produtoResponse = null;
+        try {
+            produtoResponse = new ProdutoResponse(produtoClient.detalhaProduto(request.getProdutos().get(0).getId()));
+        } catch (FeignException e) {
+            throw new ResponseStatusException(NOT_FOUND, "Produto não encontrado");
+        }
+
+
+
+//        return ResponseEntity.ok(usuarioResponse);
+        return ResponseEntity.ok(produtoResponse);
     }
 
 
