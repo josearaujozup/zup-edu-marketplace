@@ -56,8 +56,9 @@ public class CompraRequest {
 
         List<Produto> listaProdutos = buscarProdutos(produtoClient);
         BigDecimal valorTotal = somarProdutos(listaProdutos);
+        Pagamento entidadePagamento = new Pagamento(pagamento.getTitular(), pagamento.getNumero(), pagamento.getValidoAte(), pagamento.getCodigoSeguranca(),valorTotal);
 
-        return new Compra(usuario,listaProdutos,valorTotal);
+        return new Compra(usuario,listaProdutos,entidadePagamento);
     }
 //
 
@@ -86,5 +87,4 @@ public class CompraRequest {
         return valorTotal;
 
     }
-
 }

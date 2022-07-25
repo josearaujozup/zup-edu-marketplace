@@ -77,7 +77,7 @@ public class CompraController {
         Compra compra = request.toModel(produtoClient);
         compraRepository.save(compra);
 
-
+        System.out.println("Compra id: " + compra.getId());
 
 //        ProdutoResponse produtoResponse = null;
 //        try {

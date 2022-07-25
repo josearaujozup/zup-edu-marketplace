@@ -1,6 +1,7 @@
 package br.com.zup.edu.marketplace.compra;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.YearMonth;
 import java.util.UUID;
 
@@ -23,11 +24,14 @@ public class Pagamento {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Status status = Status.EM_ANALISE;
+    private Status status = Status.ANALISANDO;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Forma forma = Forma.CARTAO_CREDITO;
+    private Forma forma = Forma.CARTAO_DE_CREDITO;
+
+    @Column(nullable = false)
+    private BigDecimal valorTotal;
 
     /**
      * @deprecated Construtor de uso exclusivo do Hibernate
@@ -36,12 +40,21 @@ public class Pagamento {
     public Pagamento() {
     }
 
-    public Pagamento(UUID id_pagamento, String titular, String numero, YearMonth validoAte, String codigoSeguranca) {
+    public Pagamento(UUID id_pagamento, String titular, String numero, YearMonth validoAte, String codigoSeguranca, BigDecimal valorTotal) {
         this.id_pagamento = id_pagamento;
         this.titular = titular;
         this.numero = numero;
         this.validoAte = validoAte;
         this.codigoSeguranca = codigoSeguranca;
+        this.valorTotal = valorTotal;
+    }
+
+    public Pagamento(String titular, String numero, YearMonth validoAte, String codigoSeguranca, BigDecimal valorTotal) {
+        this.titular = titular;
+        this.numero = numero;
+        this.validoAte = validoAte;
+        this.codigoSeguranca = codigoSeguranca;
+        this.valorTotal = valorTotal;
     }
 
     public Long getId() {
@@ -74,5 +87,17 @@ public class Pagamento {
 
     public Forma getForma() {
         return forma;
+    }
+
+    public BigDecimal getValorTotal() {
+        return valorTotal;
+    }
+
+    public void mudarStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setId_pagamento(UUID id_pagamento) {
+        this.id_pagamento = id_pagamento;
     }
 }

@@ -17,10 +17,7 @@ public class Compra {
     @OneToMany(cascade = {CascadeType.PERSIST})
     private List<Produto> produtos;
 
-    @Column(nullable = false)
-    private BigDecimal valorTotal;
-
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST})
     private Pagamento pagamento;
 
     /**
@@ -30,10 +27,10 @@ public class Compra {
     public Compra() {
     }
 
-    public Compra(Long usuario, List<Produto> produtos, BigDecimal valorTotal) {
+    public Compra(Long usuario, List<Produto> produtos, Pagamento pagamento) {
         this.usuario = usuario;
         this.produtos = produtos;
-        this.valorTotal = valorTotal;
+        this.pagamento = pagamento;
     }
 
     public UUID getId() {
@@ -48,7 +45,7 @@ public class Compra {
         return produtos;
     }
 
-    public BigDecimal getValorTotal() {
-        return valorTotal;
+    public Pagamento getPagamento() {
+        return pagamento;
     }
 }
