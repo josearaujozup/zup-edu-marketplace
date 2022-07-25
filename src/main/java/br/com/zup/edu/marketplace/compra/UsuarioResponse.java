@@ -46,4 +46,5 @@ public class UsuarioResponse {
     public LocalDate getDataNascimento() {
         return dataNascimento;
     }
+
 }

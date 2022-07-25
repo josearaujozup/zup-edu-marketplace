@@ -11,8 +11,7 @@ public class Compra {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    private Usuario comprador;
+    private Long usuario;
 
     @OneToMany
     private List<Produto> produtos;
@@ -27,8 +26,8 @@ public class Compra {
     public Compra() {
     }
 
-    public Compra(Usuario comprador, List<Produto> produtos, BigDecimal valorTotal) {
-        this.comprador = comprador;
+    public Compra(Long usuario, List<Produto> produtos, BigDecimal valorTotal) {
+        this.usuario = usuario;
         this.produtos = produtos;
         this.valorTotal = valorTotal;
     }
@@ -37,8 +36,8 @@ public class Compra {
         return id;
     }
 
-    public Usuario getComprador() {
-        return comprador;
+    public Long getUsuario() {
+        return usuario;
     }
 
     public List<Produto> getProdutos() {

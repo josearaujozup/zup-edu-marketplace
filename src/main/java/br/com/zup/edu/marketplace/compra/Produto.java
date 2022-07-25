@@ -14,10 +14,9 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
+    private Long produtoId;
 
-    private BigDecimal preco;
-
+    private Integer quantidade;
 
     /**
      * @deprecated Construtor de uso exclusivo do Hibernate
@@ -26,20 +25,25 @@ public class Produto {
     public Produto() {
     }
 
-    public Produto(String nome, BigDecimal preco) {
-        this.nome = nome;
-        this.preco = preco;
+    public Produto(Long produtoId, Integer quantidade) {
+        this.produtoId = produtoId;
+        this.quantidade = quantidade;
+    }
+
+    public Produto(ProdutoRequest produtoRequest) {
+        this.produtoId = produtoRequest.getId();
+        this.quantidade = produtoRequest.getQuantidade();
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getNome() {
-        return nome;
+    public Long getProdutoId() {
+        return produtoId;
     }
 
-    public BigDecimal getPreco() {
-        return preco;
+    public Integer getQuantidade() {
+        return quantidade;
     }
 }

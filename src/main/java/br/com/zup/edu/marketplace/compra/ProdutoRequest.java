@@ -11,13 +11,13 @@ public class ProdutoRequest {
 
     @NotNull
     @Positive
-    private Long quantidade;
+    private Integer quantidade;
 
     public ProdutoRequest(){
 
     }
 
-    public ProdutoRequest(Long id, Long quantidade) {
+    public ProdutoRequest(Long id, Integer quantidade) {
         this.id = id;
         this.quantidade = quantidade;
     }
@@ -26,7 +26,7 @@ public class ProdutoRequest {
         return id;
     }
 
-    public Long getQuantidade() {
+    public Integer getQuantidade() {
         return quantidade;
     }
 }

@@ -14,6 +14,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
@@ -24,6 +28,12 @@ public class CompraController {
 
     @Autowired
     private ProdutoClient produtoClient;
+
+    private final CompraRepository compraRepository;
+
+    public CompraController(CompraRepository compraRepository) {
+        this.compraRepository = compraRepository;
+    }
 
     @GetMapping("/api/usuarios/{id}")
     public ResponseEntity<?> detalhaUsuario(@PathVariable Long id){
@@ -64,17 +74,45 @@ public class CompraController {
             throw new ResponseStatusException(NOT_FOUND, "Usuario não encontrado");
         }
 
-        ProdutoResponse produtoResponse = null;
-        try {
-            produtoResponse = new ProdutoResponse(produtoClient.detalhaProduto(request.getProdutos().get(0).getId()));
-        } catch (FeignException e) {
-            throw new ResponseStatusException(NOT_FOUND, "Produto não encontrado");
-        }
 
+        List<ProdutoResponse> produtos = new ArrayList<>();
+
+        request.getProdutos().forEach(p -> {
+
+            ProdutoResponse produto = null;
+            try {
+                produto = new ProdutoResponse(produtoClient.detalhaProduto(p.getId()));
+            } catch (FeignException e) {
+                throw new ResponseStatusException(NOT_FOUND, "Produto não encontrado");
+            }
+            //Mudar os atributos de produto e no add abaixo gerar uma instância de produto pegando
+            //os valores p.getQuantidade e produto.getAlgumaCoisa
+            produtos.add(produto);
+        });
+
+        System.out.println("Somatorio: " + request.somarProdutos(produtos));
+
+
+//                .stream().map(ProdutoResponse::new).collect(Collectors.toList());
+
+
+//        produto -> produtoClient.detalhaProduto(produto.getId())
+//
+//        Compra compra = request.toModel(produtoClient);
+//        compraRepository.save(compra);
+
+
+
+//        ProdutoResponse produtoResponse = null;
+//        try {
+//            produtoResponse = new ProdutoResponse(produtoClient.detalhaProduto(request.getProdutos().get(0).getId()));
+//        } catch (FeignException e) {
+//            throw new ResponseStatusException(NOT_FOUND, "Produto não encontrado");
+//        }
 
 
 //        return ResponseEntity.ok(usuarioResponse);
-        return ResponseEntity.ok(produtoResponse);
+        return ResponseEntity.ok(produtos);
     }
 
 
