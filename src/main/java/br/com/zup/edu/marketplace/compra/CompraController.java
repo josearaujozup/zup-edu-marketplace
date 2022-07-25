@@ -65,7 +65,7 @@ public class CompraController {
     @PostMapping("/api/compras")
     @Transactional
     public ResponseEntity<?> comprar(@RequestBody @Valid CompraRequest request, UriComponentsBuilder uriComponentsBuilder){
-//        System.out.println("Passou pela validação: " + request.getPagamento().getValidoAte());
+        System.out.println("Passou pela validação: " + request.getPagamento().getValidoAte());
 
         UsuarioResponse usuarioResponse = null;
         try {
@@ -74,32 +74,8 @@ public class CompraController {
             throw new ResponseStatusException(NOT_FOUND, "Usuario não encontrado");
         }
 
-
-        List<ProdutoResponse> produtos = new ArrayList<>();
-
-        request.getProdutos().forEach(p -> {
-
-            ProdutoResponse produto = null;
-            try {
-                produto = new ProdutoResponse(produtoClient.detalhaProduto(p.getId()));
-            } catch (FeignException e) {
-                throw new ResponseStatusException(NOT_FOUND, "Produto não encontrado");
-            }
-            //Mudar os atributos de produto e no add abaixo gerar uma instância de produto pegando
-            //os valores p.getQuantidade e produto.getAlgumaCoisa
-            produtos.add(produto);
-        });
-
-        System.out.println("Somatorio: " + request.somarProdutos(produtos));
-
-
-//                .stream().map(ProdutoResponse::new).collect(Collectors.toList());
-
-
-//        produto -> produtoClient.detalhaProduto(produto.getId())
-//
-//        Compra compra = request.toModel(produtoClient);
-//        compraRepository.save(compra);
+        Compra compra = request.toModel(produtoClient);
+        compraRepository.save(compra);
 
 
 
@@ -111,8 +87,7 @@ public class CompraController {
 //        }
 
 
-//        return ResponseEntity.ok(usuarioResponse);
-        return ResponseEntity.ok(produtos);
+        return ResponseEntity.ok(usuarioResponse);
     }
 
 

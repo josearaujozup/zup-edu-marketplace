@@ -3,21 +3,25 @@ package br.com.zup.edu.marketplace.compra;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 public class Compra {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     private Long usuario;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST})
     private List<Produto> produtos;
 
     @Column(nullable = false)
     private BigDecimal valorTotal;
+
+    @OneToOne
+    private Pagamento pagamento;
 
     /**
      * @deprecated Construtor de uso exclusivo do Hibernate
@@ -32,7 +36,7 @@ public class Compra {
         this.valorTotal = valorTotal;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

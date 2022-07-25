@@ -16,6 +16,10 @@ public class Produto {
 
     private Long produtoId;
 
+    private String nome;
+
+    private BigDecimal preco;
+
     private Integer quantidade;
 
     /**
@@ -25,8 +29,10 @@ public class Produto {
     public Produto() {
     }
 
-    public Produto(Long produtoId, Integer quantidade) {
+    public Produto(Long produtoId, String nome, BigDecimal preco, Integer quantidade) {
         this.produtoId = produtoId;
+        this.nome = nome;
+        this.preco = preco;
         this.quantidade = quantidade;
     }
 
@@ -41,6 +47,14 @@ public class Produto {
 
     public Long getProdutoId() {
         return produtoId;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public BigDecimal getPreco() {
+        return preco;
     }
 
     public Integer getQuantidade() {

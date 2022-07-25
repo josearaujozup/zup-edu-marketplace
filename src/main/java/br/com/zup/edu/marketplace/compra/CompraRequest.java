@@ -1,14 +1,19 @@
 package br.com.zup.edu.marketplace.compra;
 
 import br.com.zup.edu.marketplace.produtoclient.ProdutoClient;
+import feign.FeignException;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 public class CompraRequest {
 
@@ -47,19 +52,39 @@ public class CompraRequest {
         return pagamento;
     }
 
-//    public Compra toModel(ProdutoClient produtoClient) {
-//
-//        BigDecimal ValorTotal = somarProdutos(produtoClient);
-//
-//        List<Produto> produtosLista = produtos.stream()
-//                .map(Produto::new).collect(Collectors.toList());
-//
-//        return new Compra(usuario,produtosLista,);
-//    }
-//
-    public BigDecimal somarProdutos(List<ProdutoResponse> produtos) {
+    public Compra toModel(ProdutoClient produtoClient) {
 
-        return produtos.stream().map(p -> p.getPreco()).reduce(BigDecimal.ZERO, BigDecimal::add);
+        List<Produto> listaProdutos = buscarProdutos(produtoClient);
+        BigDecimal valorTotal = somarProdutos(listaProdutos);
+
+        return new Compra(usuario,listaProdutos,valorTotal);
+    }
+//
+
+    private List<Produto> buscarProdutos(ProdutoClient produtoClient){
+
+        List<Produto> listaProdutos = new ArrayList<>();
+
+        produtos.forEach(p -> {
+
+            ProdutoResponse produto = null;
+            try {
+                produto = new ProdutoResponse(produtoClient.detalhaProduto(p.getId()));
+            } catch (FeignException e) {
+                throw new ResponseStatusException(NOT_FOUND, "Produto não encontrado");
+            }
+
+            listaProdutos.add(new Produto(produto.getId(),produto.getNome(),produto.getPreco(),p.getQuantidade()));
+        });
+
+        return listaProdutos;
+    }
+
+    private BigDecimal somarProdutos(List<Produto> produtos) {
+
+        BigDecimal valorTotal = produtos.stream().map(p -> p.getPreco().multiply(BigDecimal.valueOf(p.getQuantidade()))).reduce(BigDecimal.ZERO, BigDecimal::add);
+        return valorTotal;
 
     }
+
 }

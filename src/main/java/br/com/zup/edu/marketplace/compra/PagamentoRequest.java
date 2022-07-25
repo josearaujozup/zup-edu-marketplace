@@ -13,6 +13,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
+import java.time.YearMonth;
 
 public class PagamentoRequest {
 
@@ -26,12 +27,12 @@ public class PagamentoRequest {
     @NotNull
     @Future
 //    @JsonFormat(pattern = "dd/MM/yyyy")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM")
 //    @JsonSerialize(using = LocalDateSerializer.class)
 //    @JsonDeserialize(using = LocalDateDeserializer.class)
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM")
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = YearMonthSerializer)
-    private LocalDate validoAte;
+    private YearMonth validoAte;
 
 
     @NotBlank
@@ -42,7 +43,7 @@ public class PagamentoRequest {
 
     }
 
-    public PagamentoRequest(String titular, String numero, LocalDate validoAte, String codigoSeguranca) {
+    public PagamentoRequest(String titular, String numero, YearMonth validoAte, String codigoSeguranca) {
         this.titular = titular;
         this.numero = numero;
         this.validoAte = validoAte;
@@ -57,7 +58,7 @@ public class PagamentoRequest {
         return numero;
     }
 
-    public LocalDate getValidoAte() {
+    public YearMonth getValidoAte() {
         return validoAte;
     }
 
