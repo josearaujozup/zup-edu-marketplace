@@ -1,4 +1,4 @@
-package br.com.zup.edu.marketplace.usuarioclient;
+package br.com.zup.edu.marketplace.usuario.client;
 
 import java.time.LocalDate;
 

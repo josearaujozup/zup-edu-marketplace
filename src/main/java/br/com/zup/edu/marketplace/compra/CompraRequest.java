@@ -1,6 +1,8 @@
 package br.com.zup.edu.marketplace.compra;
 
-import br.com.zup.edu.marketplace.produtoclient.ProdutoClient;
+import br.com.zup.edu.marketplace.pagamento.Pagamento;
+import br.com.zup.edu.marketplace.produto.Produto;
+import br.com.zup.edu.marketplace.produto.client.ProdutoClient;
 import feign.FeignException;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -11,7 +13,6 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 

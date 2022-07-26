@@ -1,4 +1,4 @@
-package br.com.zup.edu.marketplace.compra;
+package br.com.zup.edu.marketplace.pagamento;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

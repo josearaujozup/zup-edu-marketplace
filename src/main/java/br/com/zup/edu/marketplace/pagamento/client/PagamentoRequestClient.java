@@ -1,6 +1,6 @@
-package br.com.zup.edu.marketplace.pagamentoclient;
+package br.com.zup.edu.marketplace.pagamento.client;
 
-import br.com.zup.edu.marketplace.compra.Pagamento;
+import br.com.zup.edu.marketplace.pagamento.Pagamento;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.Column;

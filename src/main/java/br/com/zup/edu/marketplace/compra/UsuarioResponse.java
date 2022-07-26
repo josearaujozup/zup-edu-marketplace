@@ -1,6 +1,6 @@
 package br.com.zup.edu.marketplace.compra;
 
-import br.com.zup.edu.marketplace.usuarioclient.DetalhaUsuarioResponse;
+import br.com.zup.edu.marketplace.usuario.client.DetalhaUsuarioResponse;
 
 import java.time.LocalDate;
 

@@ -1,6 +1,6 @@
-package br.com.zup.edu.marketplace.pagamentoclient;
+package br.com.zup.edu.marketplace.pagamento.client;
 
-import br.com.zup.edu.marketplace.compra.Status;
+import br.com.zup.edu.marketplace.pagamento.Status;
 
 import java.util.UUID;
 

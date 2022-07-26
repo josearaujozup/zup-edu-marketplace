@@ -1,6 +1,6 @@
 package br.com.zup.edu.marketplace.compra;
 
-import br.com.zup.edu.marketplace.produtoclient.DetalhaProdutoResponse;
+import br.com.zup.edu.marketplace.produto.client.DetalhaProdutoResponse;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

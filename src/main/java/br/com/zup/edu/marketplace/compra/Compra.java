@@ -1,7 +1,9 @@
 package br.com.zup.edu.marketplace.compra;
 
+import br.com.zup.edu.marketplace.pagamento.Pagamento;
+import br.com.zup.edu.marketplace.produto.Produto;
+
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 

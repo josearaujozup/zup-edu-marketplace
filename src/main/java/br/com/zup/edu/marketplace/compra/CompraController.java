@@ -1,9 +1,9 @@
 package br.com.zup.edu.marketplace.compra;
 
-import br.com.zup.edu.marketplace.produtoclient.DetalhaProdutoResponse;
-import br.com.zup.edu.marketplace.produtoclient.ProdutoClient;
-import br.com.zup.edu.marketplace.usuarioclient.DetalhaUsuarioResponse;
-import br.com.zup.edu.marketplace.usuarioclient.UsuarioClient;
+import br.com.zup.edu.marketplace.produto.client.DetalhaProdutoResponse;
+import br.com.zup.edu.marketplace.produto.client.ProdutoClient;
+import br.com.zup.edu.marketplace.usuario.client.DetalhaUsuarioResponse;
+import br.com.zup.edu.marketplace.usuario.client.UsuarioClient;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +13,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 

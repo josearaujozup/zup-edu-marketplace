@@ -1,4 +1,4 @@
-package br.com.zup.edu.marketplace.produtoclient;
+package br.com.zup.edu.marketplace.produto.client;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

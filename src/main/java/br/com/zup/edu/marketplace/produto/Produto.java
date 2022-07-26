@@ -1,4 +1,6 @@
-package br.com.zup.edu.marketplace.compra;
+package br.com.zup.edu.marketplace.produto;
+
+import br.com.zup.edu.marketplace.compra.ProdutoRequest;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

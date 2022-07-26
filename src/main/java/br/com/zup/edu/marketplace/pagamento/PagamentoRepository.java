@@ -1,4 +1,4 @@
-package br.com.zup.edu.marketplace.compra;
+package br.com.zup.edu.marketplace.pagamento;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
