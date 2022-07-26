@@ -1,13 +1,11 @@
 package br.com.zup.edu.marketplace.produto;
 
-import br.com.zup.edu.marketplace.compra.ProdutoRequest;
+import br.com.zup.edu.marketplace.venda.Venda;
+import br.com.zup.edu.marketplace.venda.ProdutoRequest;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 public class Produto {
@@ -23,6 +21,10 @@ public class Produto {
     private BigDecimal preco;
 
     private Integer quantidade;
+
+//    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Venda venda;
 
     /**
      * @deprecated Construtor de uso exclusivo do Hibernate
@@ -61,5 +63,22 @@ public class Produto {
 
     public Integer getQuantidade() {
         return quantidade;
+    }
+
+    public void setCompra(Venda venda) {
+        this.venda = venda;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Produto produto = (Produto) o;
+        return Objects.equals(id, produto.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

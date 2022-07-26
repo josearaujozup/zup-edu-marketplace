@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableFeignClients
-@EnableScheduling
+//@EnableScheduling
 public class MarketplaceApplication {
 
 	public static void main(String[] args) {

@@ -1,9 +1,11 @@
-package br.com.zup.edu.marketplace.compra;
+package br.com.zup.edu.marketplace.venda;
 
 import br.com.zup.edu.marketplace.pagamento.Pagamento;
+import br.com.zup.edu.marketplace.pagamento.client.PagamentoClient;
+import br.com.zup.edu.marketplace.pagamento.client.PagamentoRequestClient;
+import br.com.zup.edu.marketplace.pagamento.client.PagamentoResponseClient;
 import br.com.zup.edu.marketplace.produto.Produto;
 import br.com.zup.edu.marketplace.produto.client.ProdutoClient;
-import feign.FeignException;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
@@ -16,7 +18,7 @@ import java.util.List;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-public class CompraRequest {
+public class VendaRequest {
 
     @NotNull
     @Positive
@@ -31,11 +33,11 @@ public class CompraRequest {
     @Valid
     private PagamentoRequest pagamento;
 
-    public CompraRequest(){
+    public VendaRequest(){
 
     }
 
-    public CompraRequest(Long usuario, List<ProdutoRequest> produtos, PagamentoRequest pagamento) {
+    public VendaRequest(Long usuario, List<ProdutoRequest> produtos, PagamentoRequest pagamento) {
         this.usuario = usuario;
         this.produtos = produtos;
         this.pagamento = pagamento;
@@ -53,15 +55,35 @@ public class CompraRequest {
         return pagamento;
     }
 
-    public Compra toModel(ProdutoClient produtoClient) {
+    public Venda toModel(ProdutoClient produtoClient, PagamentoClient pagamentoClient) {
 
         List<Produto> listaProdutos = buscarProdutos(produtoClient);
         BigDecimal valorTotal = somarProdutos(listaProdutos);
         Pagamento entidadePagamento = new Pagamento(pagamento.getTitular(), pagamento.getNumero(), pagamento.getValidoAte(), pagamento.getCodigoSeguranca(),valorTotal);
 
-        return new Compra(usuario,listaProdutos,entidadePagamento);
+        Pagamento pagamentoVerificado = verificarPagamento(entidadePagamento, pagamentoClient);
+
+        Venda venda = new Venda(usuario, pagamentoVerificado);
+
+        listaProdutos.forEach(produto -> {
+            venda.adicionar(produto);
+        });
+
+//        return new Compra(usuario,listaProdutos,entidadePagamento);
+        return venda;
     }
 //
+
+    private Pagamento verificarPagamento(Pagamento pagamento, PagamentoClient pagamentoClient){
+
+        PagamentoRequestClient pagamentoRequestClient = new PagamentoRequestClient(pagamento);
+        PagamentoResponseClient pagamentoResponseClient = pagamentoClient.verificarPagamento(pagamentoRequestClient);
+
+        pagamento.mudarStatus(pagamentoResponseClient.getStatus());
+        pagamento.setId_pagamento(pagamentoResponseClient.getId());
+
+        return pagamento;
+    }
 
     private List<Produto> buscarProdutos(ProdutoClient produtoClient){
 
@@ -69,12 +91,8 @@ public class CompraRequest {
 
         produtos.forEach(p -> {
 
-            ProdutoResponse produto = null;
-            try {
-                produto = new ProdutoResponse(produtoClient.detalhaProduto(p.getId()));
-            } catch (FeignException e) {
-                throw new ResponseStatusException(NOT_FOUND, "Produto não encontrado");
-            }
+            ProdutoResponse produto = new ProdutoResponse(produtoClient.detalhaProduto(p.getId())
+                    .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Produto não encontrado")));
 
             listaProdutos.add(new Produto(produto.getId(),produto.getNome(),produto.getPreco(),p.getQuantidade()));
         });

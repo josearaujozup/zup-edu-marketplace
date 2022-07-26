@@ -1,4 +1,4 @@
-package br.com.zup.edu.marketplace.topico.Mensagem;
+package br.com.zup.edu.marketplace.topico;
 
 import java.math.BigDecimal;
 
@@ -39,13 +39,4 @@ public class Item {
         return valor;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", quantidade=" + quantidade +
-                ", valor=" + valor +
-                '}';
-    }
 }

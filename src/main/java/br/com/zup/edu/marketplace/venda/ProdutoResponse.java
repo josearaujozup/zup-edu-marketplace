@@ -1,4 +1,4 @@
-package br.com.zup.edu.marketplace.compra;
+package br.com.zup.edu.marketplace.venda;
 
 import br.com.zup.edu.marketplace.produto.client.DetalhaProdutoResponse;
 

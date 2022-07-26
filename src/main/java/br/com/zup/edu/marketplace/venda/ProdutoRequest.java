@@ -1,4 +1,4 @@
-package br.com.zup.edu.marketplace.compra;
+package br.com.zup.edu.marketplace.venda;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;

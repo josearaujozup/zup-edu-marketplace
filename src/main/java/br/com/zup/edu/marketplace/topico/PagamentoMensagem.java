@@ -1,4 +1,4 @@
-package br.com.zup.edu.marketplace.topico.Mensagem;
+package br.com.zup.edu.marketplace.topico;
 
 import br.com.zup.edu.marketplace.pagamento.Forma;
 import br.com.zup.edu.marketplace.pagamento.Status;
@@ -34,12 +34,4 @@ public class PagamentoMensagem {
         return status;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "id=" + id +
-                ", forma=" + forma +
-                ", status=" + status +
-                '}';
-    }
 }

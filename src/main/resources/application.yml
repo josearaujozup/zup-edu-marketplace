@@ -20,7 +20,7 @@ spring:
       enabled: ALWAYS
   datasource:
     driverClassName: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://127.0.0.1:3306/marketplace_microservico
+    url: jdbc:mariadb://127.0.0.1:3306/marketplace_microservico2
     username: root
     password: 12345
   jpa:
@@ -46,6 +46,12 @@ spring:
 feign:
   client:
     config:
-      marketplace:
+      usuarioClient:
+        decode404: true
+        loggerLevel: full
+      produtoClient:
+        decode404: true
+        loggerLevel: full
+      pagamentoClient:
         decode404: true
         loggerLevel: full

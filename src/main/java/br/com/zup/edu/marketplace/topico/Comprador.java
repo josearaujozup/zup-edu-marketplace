@@ -1,4 +1,4 @@
-package br.com.zup.edu.marketplace.topico.Mensagem;
+package br.com.zup.edu.marketplace.topico;
 
 import br.com.zup.edu.marketplace.usuario.client.DetalhaUsuarioResponse;
 
@@ -49,14 +49,4 @@ public class Comprador {
         return dataNascimento;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "nome='" + nome + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", endereco='" + endereco + '\'' +
-                ", email='" + email + '\'' +
-                ", dataNascimento=" + dataNascimento +
-                '}';
-    }
 }
