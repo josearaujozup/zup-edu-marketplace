@@ -26,7 +26,7 @@ public class PagamentoService {
     }
 
     @Transactional
-    @Scheduled(fixedRate = 3000)
+    @Scheduled(fixedRate = 30000)
     public void realizarPagamento(){
         System.out.println("Testando o job: ");
 

@@ -34,6 +34,11 @@ spring:
       ddl-auto: update
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
       dialect: org.hibernate.dialect.MariaDBDialect
+  kafka:
+    producer:
+      bootstrap-servers: 127.0.0.1:9092
+      key-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 #  jackson:
 #    serialization:
 #      WRITE_DATES_AS_TIMESTAMPS: false
