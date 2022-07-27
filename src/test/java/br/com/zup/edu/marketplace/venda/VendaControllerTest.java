@@ -70,9 +70,9 @@ class VendaControllerTest {
 
     @BeforeEach
     void setUp() {
-        pagamentoRepository.deleteAll();
-        produtoRepository.deleteAll();
         vendaRepository.deleteAll();
+        produtoRepository.deleteAll();
+        pagamentoRepository.deleteAll();
     }
 
     @Test

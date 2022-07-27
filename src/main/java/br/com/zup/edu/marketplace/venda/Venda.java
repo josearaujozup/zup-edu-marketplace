@@ -20,9 +20,8 @@ public class Venda {
 
     private Long usuario;
 
-//    @OneToMany(mappedBy = "compra", cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
-//    @OneToMany(mappedBy = "venda", cascade = {CascadeType.PERSIST})
-    @OneToMany(cascade = {CascadeType.PERSIST})
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JoinColumn(name="venda_id")
     private List<Produto> produtos = new ArrayList<>();
 
     @OneToOne(cascade = {CascadeType.PERSIST})
