@@ -19,12 +19,7 @@ public class PagamentoRequest {
 
     @NotNull
     @Future
-//    @JsonFormat(pattern = "dd/MM/yyyy")
     @JsonFormat(pattern = "yyyy-MM")
-//    @JsonSerialize(using = LocalDateSerializer.class)
-//    @JsonDeserialize(using = LocalDateDeserializer.class)
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM")
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = YearMonthSerializer)
     private YearMonth validoAte;
 
 

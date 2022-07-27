@@ -1,0 +1,42 @@
+
+##
+# Spring and DataSource
+##
+spring:
+  datasource:
+    driverClassName: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://127.0.0.1:3306/marketplace_microservico2_test
+    username: root
+    password: 12345
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      dialect: org.hibernate.dialect.MariaDBDialect
+  kafka:
+    producer:
+      bootstrap-servers: 127.0.0.1:9092
+      key-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+#  jackson:
+#    serialization:
+#      WRITE_DATES_AS_TIMESTAMPS: false
+
+feign:
+  client:
+    config:
+      usuarioClient:
+        decode404: true
+        loggerLevel: full
+      produtoClient:
+        decode404: true
+        loggerLevel: full
+      pagamentoClient:
+        decode404: true
+        loggerLevel: full

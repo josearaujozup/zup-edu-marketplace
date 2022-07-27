@@ -1,5 +1,6 @@
 package br.com.zup.edu.marketplace.venda;
 
+import br.com.zup.edu.marketplace.pagamento.Status;
 import br.com.zup.edu.marketplace.pagamento.client.PagamentoClient;
 import br.com.zup.edu.marketplace.produto.client.ProdutoClient;
 import br.com.zup.edu.marketplace.topico.Comprador;
@@ -54,7 +55,6 @@ public class VendaController {
     @PostMapping("/api/vendas")
     @Transactional
     public ResponseEntity<?> comprar(@RequestBody @Valid VendaRequest request, UriComponentsBuilder uriComponentsBuilder) throws JsonProcessingException {
-        System.out.println("Passou pela validação: " + request.getPagamento().getValidoAte());
 
         DetalhaUsuarioResponse usuarioResponse = usuarioClient.detalhaUsuario(request.getUsuario())
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Usuario não encontrado"));;
@@ -62,9 +62,11 @@ public class VendaController {
         Venda venda = request.toModel(produtoClient,pagamentoClient);
         vendaRepository.save(venda);
 
-        Mensagem mensagem = prepararMensagemTopico(venda, usuarioResponse);
-        String mensagemPayload = mapper.writeValueAsString(mensagem);
-        kafkaTemplate.send("teste",mensagemPayload);
+        if(venda.getPagamento().getStatus() == Status.APROVADO){
+            Mensagem mensagem = prepararMensagemTopico(venda, usuarioResponse);
+            String mensagemPayload = mapper.writeValueAsString(mensagem);
+            kafkaTemplate.send("teste",mensagemPayload);
+        }
 
         URI location = uriComponentsBuilder.path("/api/vendas/{id}")
                 .buildAndExpand(venda.getId())
@@ -77,10 +79,10 @@ public class VendaController {
         Comprador comprador = new Comprador(usuarioResponse);
 
         List<Item> itens = new ArrayList<>();
-        System.out.println("AQUIIIIII  Size Produtos: " + venda.getProdutos().size());
+
         venda.getProdutos().forEach(p ->{
             Item item = new Item(p.getProdutoId(), p.getNome(),p.getQuantidade(),p.getPreco());
-            System.out.println("Nome do  Produto: "+p.getNome());
+
             itens.add(item);
         });
 

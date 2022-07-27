@@ -21,7 +21,8 @@ public class Venda {
     private Long usuario;
 
 //    @OneToMany(mappedBy = "compra", cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
-    @OneToMany(mappedBy = "venda", cascade = {CascadeType.PERSIST})
+//    @OneToMany(mappedBy = "venda", cascade = {CascadeType.PERSIST})
+    @OneToMany(cascade = {CascadeType.PERSIST})
     private List<Produto> produtos = new ArrayList<>();
 
     @OneToOne(cascade = {CascadeType.PERSIST})
@@ -39,7 +40,13 @@ public class Venda {
         this.pagamento = pagamento;
     }
 
-//    public UUID getId() {
+    public Venda(Long usuario, List<Produto> produtos, Pagamento pagamento) {
+        this.usuario = usuario;
+        this.produtos = produtos;
+        this.pagamento = pagamento;
+    }
+
+    //    public UUID getId() {
 //        return id;
 //    }
 
@@ -59,9 +66,5 @@ public class Venda {
         return pagamento;
     }
 
-    public void adicionar(Produto produto){
-        this.produtos.add(produto);
-        produto.setCompra(this);
-    }
 
 }

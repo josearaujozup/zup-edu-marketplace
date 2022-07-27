@@ -22,9 +22,6 @@ public class Produto {
 
     private Integer quantidade;
 
-//    @ManyToOne(optional = false)
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Venda venda;
 
     /**
      * @deprecated Construtor de uso exclusivo do Hibernate
@@ -65,9 +62,6 @@ public class Produto {
         return quantidade;
     }
 
-    public void setCompra(Venda venda) {
-        this.venda = venda;
-    }
 
     @Override
     public boolean equals(Object o) {

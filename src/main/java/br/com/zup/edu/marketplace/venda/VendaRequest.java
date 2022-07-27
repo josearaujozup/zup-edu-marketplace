@@ -63,16 +63,10 @@ public class VendaRequest {
 
         Pagamento pagamentoVerificado = verificarPagamento(entidadePagamento, pagamentoClient);
 
-        Venda venda = new Venda(usuario, pagamentoVerificado);
+        Venda venda = new Venda(usuario, listaProdutos, pagamentoVerificado);
 
-        listaProdutos.forEach(produto -> {
-            venda.adicionar(produto);
-        });
-
-//        return new Compra(usuario,listaProdutos,entidadePagamento);
         return venda;
     }
-//
 
     private Pagamento verificarPagamento(Pagamento pagamento, PagamentoClient pagamentoClient){
 
